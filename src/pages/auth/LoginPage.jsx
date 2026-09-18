@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./LoginPage.css";
 
+
 function LoginPage() {
   // =========================================================
   // ROUTER
@@ -17,6 +18,15 @@ function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
+
+
+  // =========================================================
+  // ROLE STATE - NEW
+  // Lưu role mà người dùng muốn đăng nhập
+  // MEMBER = Thành viên
+  // CENTER_MANAGER = Quản lý trung tâm
+  // =========================================================
+  const [role, setRole] = useState("MEMBER");
 
 
   // =========================================================
@@ -124,6 +134,7 @@ function LoginPage() {
 // Tài khoản dùng để FE test khi Backend chưa hoàn thành.
 // =====================================================
 if (
+  role === "MEMBER" &&
   email === "member@gmail.com" &&
   password === "123456"
 ) {
@@ -148,6 +159,7 @@ if (
 // Tài khoản dùng để FE test khi Backend chưa hoàn thành.
 // =====================================================
 if (
+  role === "CENTER_MANAGER" &&
   email === "manager@gmail.com" &&
   password === "123456"
 ) {
@@ -267,6 +279,52 @@ if (
               onSubmit={handleSubmit}
               noValidate
             >
+
+              {/* ================= ROLE SELECTOR - NEW ================= */}
+              <div className="role-selector">
+
+                <button
+                  type="button"
+                  className={
+                    role === "CENTER_MANAGER"
+                      ? "role-button active"
+                      : "role-button"
+                  }
+                  onClick={() => {
+                    setRole("CENTER_MANAGER");
+
+                    // Xóa lỗi Login khi người dùng đổi role
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      login: "",
+                    }));
+                  }}
+                >
+                  Manager
+                </button>
+
+                <button
+                  type="button"
+                  className={
+                    role === "MEMBER"
+                      ? "role-button active"
+                      : "role-button"
+                  }
+                  onClick={() => {
+                    setRole("MEMBER");
+
+                    // Xóa lỗi Login khi người dùng đổi role
+                    setErrors((prevErrors) => ({
+                      ...prevErrors,
+                      login: "",
+                    }));
+                  }}
+                >
+                  Member
+                </button>
+
+              </div>
+
 
               {/* ================= EMAIL ================= */}
               <div className="form-group">
@@ -435,13 +493,14 @@ if (
 
             {/* ================= REGISTER ================= */}
             <p className="register-text">
-
               Chưa có tài khoản?{" "}
-
-              <a href="#">
+              <button
+                type="button"
+                className="register-link-button"
+                onClick={() => navigate("/register")}
+              >
                 Đăng ký ngay
-              </a>
-
+              </button>
             </p>
 
           </div>

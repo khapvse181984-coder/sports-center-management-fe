@@ -4,7 +4,7 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-
+import RegisterPage from "./pages/auth/RegisterPage";
 import LoginPage from "./pages/auth/LoginPage";
 import MemberPage from "./pages/member/MemberPage";
 import ManagerPage from "./pages/manager/ManagerPage";
@@ -28,6 +28,10 @@ function App() {
         <Route
           path="/login"
           element={<LoginPage />}
+        />
+        <Route
+          path="/register"
+          element={<RegisterPage />}
         />
 
 
