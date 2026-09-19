@@ -109,3 +109,33 @@ code {
   padding: 4px 8px;
   background: var(--code-bg);
 }
+/* =========================================================
+   GLOBAL LAYOUT
+   Đảm bảo ứng dụng chiếm toàn bộ màn hình trình duyệt.
+========================================================= */
+
+html,
+body,
+#root {
+  width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  min-height: 100vh;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  display: block;
+}
+
+#root {
+  min-height: 100vh;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
