@@ -1,7 +1,8 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import "./LoginPage.css";
 
+import { useNavigate } from "react-router-dom";
+
+import "./LoginPage.css";
 
 function LoginPage() {
   // =========================================================
@@ -9,7 +10,6 @@ function LoginPage() {
   // Dùng để chuyển trang sau khi đăng nhập thành công
   // =========================================================
   const navigate = useNavigate();
-
 
   // =========================================================
   // FORM STATE
@@ -19,23 +19,12 @@ function LoginPage() {
   const [password, setPassword] = useState("");
   const [rememberMe, setRememberMe] = useState(false);
 
-
-  // =========================================================
-  // ROLE STATE - NEW
-  // Lưu role mà người dùng muốn đăng nhập
-  // MEMBER = Thành viên
-  // CENTER_MANAGER = Quản lý trung tâm
-  // =========================================================
-  const [role, setRole] = useState("MEMBER");
-
-
   // =========================================================
   // PASSWORD VISIBILITY
   // false = ẩn mật khẩu
   // true  = hiện mật khẩu
   // =========================================================
   const [showPassword, setShowPassword] = useState(false);
-
 
   // =========================================================
   // VALIDATION STATE
@@ -46,7 +35,6 @@ function LoginPage() {
     password: "",
     login: "",
   });
-
 
   // =========================================================
   // VALIDATE FORM
@@ -68,7 +56,6 @@ function LoginPage() {
       newErrors.email = "Email không đúng định dạng.";
     }
 
-
     // -------------------------
     // Validate Password
     // -------------------------
@@ -79,15 +66,12 @@ function LoginPage() {
         "Mật khẩu phải có ít nhất 6 ký tự.";
     }
 
-
     // Cập nhật lỗi lên giao diện
     setErrors(newErrors);
-
 
     // Form hợp lệ khi không có lỗi Email và Password
     return !newErrors.email && !newErrors.password;
   };
-
 
   // =========================================================
   // HANDLE LOGIN
@@ -95,7 +79,6 @@ function LoginPage() {
   // =========================================================
   const handleSubmit = (e) => {
     e.preventDefault();
-
 
     // -------------------------
     // BƯỚC 1: Validate Form
@@ -105,7 +88,6 @@ function LoginPage() {
     if (!isValid) {
       return;
     }
-
 
     // =====================================================
     // MOCK LOGIN - DEVELOPMENT ONLY
@@ -125,57 +107,28 @@ function LoginPage() {
     // 6. Xóa Mock Login bên dưới
     // =====================================================
 
-
     // -------------------------
     // MOCK MEMBER ACCOUNT
     // -------------------------
     // =====================================================
-// MOCK MEMBER LOGIN
-// Tài khoản dùng để FE test khi Backend chưa hoàn thành.
-// =====================================================
-if (
-  role === "MEMBER" &&
-  email === "member@gmail.com" &&
-  password === "123456"
-) {
-  // Lưu role tạm thời trong sessionStorage
-  // Khi đóng tab/browser session này sẽ bị xóa.
-  sessionStorage.setItem("userRole", "MEMBER");
+    // MOCK MEMBER LOGIN
+    // Tài khoản dùng để FE test khi Backend chưa hoàn thành.
+    // =====================================================
+    if (
+      email === "member@gmail.com" &&
+      password === "123456"
+    ) {
+      // Lưu role tạm thời trong sessionStorage
+      // Khi đóng tab/browser session này sẽ bị xóa.
+      sessionStorage.setItem("userRole", "MEMBER");
 
-  console.log("Login success - MEMBER");
+      console.log("Login success - MEMBER");
 
-  // Chuyển Member tới Member Dashboard
-  navigate("/member");
+      // Chuyển Member tới Member Dashboard
+      navigate("/member");
 
-  return;
-}
-
-
-    // -------------------------
-    // MOCK CENTER MANAGER ACCOUNT
-    // -------------------------
-   // =====================================================
-// MOCK CENTER MANAGER LOGIN
-// Tài khoản dùng để FE test khi Backend chưa hoàn thành.
-// =====================================================
-if (
-  role === "CENTER_MANAGER" &&
-  email === "manager@gmail.com" &&
-  password === "123456"
-) {
-  // Lưu role của Center Manager
-  sessionStorage.setItem(
-    "userRole",
-    "CENTER_MANAGER"
-  );
-
-  console.log("Login success - CENTER_MANAGER");
-
-  // Chuyển Manager tới Manager Dashboard
-  navigate("/manager");
-
-  return;
-}
+      return;
+    }
 
     // =====================================================
     // LOGIN FAILED
@@ -186,7 +139,6 @@ if (
       login: "Email hoặc mật khẩu không chính xác.",
     }));
   };
-
 
   return (
     <div className="login-page">
@@ -208,10 +160,8 @@ if (
             </span>
           </div>
 
-
           {/* BANNER CONTENT */}
           <div className="banner-content">
-
             <p className="welcome-text">
               WELCOME TO
             </p>
@@ -227,7 +177,6 @@ if (
               của bạn một cách dễ dàng.
             </p>
 
-
             {/* SYSTEM FEATURES */}
             <div className="features">
               <span>
@@ -242,21 +191,17 @@ if (
                 ✓ Quản lý gói thành viên
               </span>
             </div>
-
           </div>
         </div>
-
 
         {/* =================================================
             RIGHT SIDE - LOGIN FORM
         ================================================== */}
         <div className="login-section">
-
           <div className="login-form-wrapper">
 
             {/* LOGIN HEADER */}
             <div className="login-heading">
-
               <p>
                 SPORTS CENTER
               </p>
@@ -268,67 +213,30 @@ if (
               <span>
                 Đăng nhập để tiếp tục sử dụng hệ thống
               </span>
-
             </div>
-
 
             {/* =================================================
                 LOGIN FORM
             ================================================== */}
+
+            {/* 
+              Form bao bọc toàn bộ khu vực nhập Email,
+              Password và nút Đăng nhập.
+
+              onSubmit gọi handleSubmit() khi người dùng
+              nhấn nút "Đăng nhập" hoặc Enter.
+
+              noValidate tắt validation mặc định của
+              trình duyệt để sử dụng validation riêng
+              bằng hàm validateForm().
+            */}
             <form
               onSubmit={handleSubmit}
               noValidate
             >
 
-              {/* ================= ROLE SELECTOR - NEW ================= */}
-              <div className="role-selector">
-
-                <button
-                  type="button"
-                  className={
-                    role === "CENTER_MANAGER"
-                      ? "role-button active"
-                      : "role-button"
-                  }
-                  onClick={() => {
-                    setRole("CENTER_MANAGER");
-
-                    // Xóa lỗi Login khi người dùng đổi role
-                    setErrors((prevErrors) => ({
-                      ...prevErrors,
-                      login: "",
-                    }));
-                  }}
-                >
-                  Manager
-                </button>
-
-                <button
-                  type="button"
-                  className={
-                    role === "MEMBER"
-                      ? "role-button active"
-                      : "role-button"
-                  }
-                  onClick={() => {
-                    setRole("MEMBER");
-
-                    // Xóa lỗi Login khi người dùng đổi role
-                    setErrors((prevErrors) => ({
-                      ...prevErrors,
-                      login: "",
-                    }));
-                  }}
-                >
-                  Member
-                </button>
-
-              </div>
-
-
               {/* ================= EMAIL ================= */}
               <div className="form-group">
-
                 <label htmlFor="email">
                   Email
                 </label>
@@ -338,7 +246,6 @@ if (
                   type="email"
                   placeholder="example@email.com"
                   value={email}
-
                   onChange={(e) => {
                     setEmail(e.target.value);
 
@@ -349,7 +256,6 @@ if (
                       login: "",
                     }));
                   }}
-
                   className={
                     errors.email
                       ? "input-error"
@@ -357,22 +263,17 @@ if (
                   }
                 />
 
-
                 {/* EMAIL ERROR */}
                 {errors.email && (
                   <p className="error-message">
                     {errors.email}
                   </p>
                 )}
-
               </div>
-
 
               {/* ================= PASSWORD ================= */}
               <div className="form-group">
-
                 <div className="password-header">
-
                   <label htmlFor="password">
                     Mật khẩu
                   </label>
@@ -380,12 +281,9 @@ if (
                   <a href="#">
                     Quên mật khẩu?
                   </a>
-
                 </div>
 
-
                 <div className="password-input-wrapper">
-
                   <input
                     id="password"
 
@@ -398,7 +296,6 @@ if (
 
                     placeholder="Nhập mật khẩu"
                     value={password}
-
                     onChange={(e) => {
                       setPassword(e.target.value);
 
@@ -409,7 +306,6 @@ if (
                         login: "",
                       }));
                     }}
-
                     className={
                       errors.password
                         ? "input-error"
@@ -417,12 +313,10 @@ if (
                     }
                   />
 
-
                   {/* SHOW / HIDE PASSWORD */}
                   <button
                     type="button"
                     className="show-password-button"
-
                     onClick={() =>
                       setShowPassword(
                         (prev) => !prev
@@ -433,9 +327,7 @@ if (
                       ? "Ẩn"
                       : "Hiện"}
                   </button>
-
                 </div>
-
 
                 {/* PASSWORD ERROR */}
                 {errors.password && (
@@ -443,9 +335,7 @@ if (
                     {errors.password}
                   </p>
                 )}
-
               </div>
-
 
               {/* =================================================
                   LOGIN ERROR
@@ -457,15 +347,12 @@ if (
                 </div>
               )}
 
-
               {/* ================= REMEMBER ME ================= */}
               <div className="remember-me">
-
                 <input
                   type="checkbox"
                   id="remember"
                   checked={rememberMe}
-
                   onChange={(e) =>
                     setRememberMe(
                       e.target.checked
@@ -476,9 +363,7 @@ if (
                 <label htmlFor="remember">
                   Ghi nhớ đăng nhập
                 </label>
-
               </div>
-
 
               {/* ================= LOGIN BUTTON ================= */}
               <button
@@ -490,10 +375,10 @@ if (
 
             </form>
 
-
             {/* ================= REGISTER ================= */}
             <p className="register-text">
               Chưa có tài khoản?{" "}
+
               <button
                 type="button"
                 className="register-link-button"
@@ -505,7 +390,6 @@ if (
 
           </div>
         </div>
-
       </div>
     </div>
   );
